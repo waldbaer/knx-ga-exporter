@@ -51,6 +51,7 @@ def ParseCommandLineArguments():
 
   parser.add_argument('--ga-sheet-dpt-column', default=5, help='Column containing datapoint type of KNX GA')
   parser.add_argument('--ga-sheet-target-ID-column', default=6, help='Column containing target ID KNX GA')
+  parser.add_argument('--ga-sheet-compiled-GA-column', default=7, help='Column containing full accumulated GA')
 
   args = parser.parse_args()
   return args
@@ -65,8 +66,6 @@ def ParseGroupAddresses(wb, args):
   ws = wb[args.ga_sheet_name]
   for row in ws.iter_rows(min_row=args.ga_sheet_first_row, max_col=args.ga_sheet_last_column):
     target_id = row[args.ga_sheet_target_ID_column].value
-    if(target_id == None or target_id == 0):
-      continue
 
     group_main = row[args.ga_sheet_main_ID_column].value
     group_middle = row[args.ga_sheet_middle_ID_column].value
@@ -77,6 +76,11 @@ def ParseGroupAddresses(wb, args):
     group_sub_name = row[args.ga_sheet_sub_name_column].value
 
     dpt = row[args.ga_sheet_dpt_column].value
+    compiled_ga = row[args.ga_sheet_compiled_GA_column].value
+
+    # Skip invalid / incomplete GAs
+    if(dpt == None or dpt == 0 or compiled_ga == None or compiled_ga == 0):
+      continue
 
     ga = GroupAddress(group_main, group_middle, group_sub, group_main_name, group_middle_name, group_sub_name, target_id, dpt)
     logging.info("Parsed GA: %s" % (str(ga)))
