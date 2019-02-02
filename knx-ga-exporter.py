@@ -9,15 +9,16 @@ import csv
 
 # ---- Main ------------------------------------------------------------------------------------------------------------
 class GroupAddress:
-  def __init__(self, main, middle, sub, main_name, middle_name, sub_name, description, dpt):
+  def __init__(self, main, middle, sub, main_name, middle_name, sub_name, target_id, dpt, comment):
     self.main=main
     self.middle=middle
     self.sub=sub
     self.main_name=main_name
     self.middle_name=middle_name
     self.sub_name=sub_name
-    self.description=description
+    self.target_id=target_id
     self.dpt=dpt
+    self.comment=comment
   def __str__(self):
     return '{}/{}/{} {}|{}|{}'.format(self.main, self.middle, self.sub, self.main_name, self.middle_name, self.sub_name)
 
@@ -39,7 +40,7 @@ def ParseCommandLineArguments():
 
   parser.add_argument('--ga-sheet-name', default='KNX-Gruppenadressen', help='Name of XLSX sheet containing the KNX group addresses')
   parser.add_argument('--ga-sheet-first-row', default=8, help='First row containing GAs')
-  parser.add_argument('--ga-sheet-last-column', default=9, help='Last column')
+  parser.add_argument('--ga-sheet-last-column', default=10, help='Last column')
 
   parser.add_argument('--ga-sheet-main-ID-column', default=0, help='Column containing main ID of KNX GA')
   parser.add_argument('--ga-sheet-middle-ID-column', default=2, help='Column containing middle ID of KNX GA')
@@ -52,6 +53,7 @@ def ParseCommandLineArguments():
   parser.add_argument('--ga-sheet-dpt-column', default=5, help='Column containing datapoint type of KNX GA')
   parser.add_argument('--ga-sheet-target-ID-column', default=6, help='Column containing target ID KNX GA')
   parser.add_argument('--ga-sheet-compiled-GA-column', default=7, help='Column containing full accumulated GA')
+  parser.add_argument('--ga-sheet-comment', default=9, help='Column containing GA comment')
 
   args = parser.parse_args()
   return args
@@ -77,12 +79,13 @@ def ParseGroupAddresses(wb, args):
 
     dpt = row[args.ga_sheet_dpt_column].value
     compiled_ga = row[args.ga_sheet_compiled_GA_column].value
+    comment = row[args.ga_sheet_comment].value
 
     # Skip invalid / incomplete GAs
     if(dpt == None or dpt == 0 or compiled_ga == None or compiled_ga == 0):
       continue
 
-    ga = GroupAddress(group_main, group_middle, group_sub, group_main_name, group_middle_name, group_sub_name, target_id, dpt)
+    ga = GroupAddress(group_main, group_middle, group_sub, group_main_name, group_middle_name, group_sub_name, target_id, dpt, comment)
     logging.info("Parsed GA: %s" % (str(ga)))
     gas.append(ga);
   return gas
@@ -113,7 +116,18 @@ def ExportCsv(gas, output_file):
 
         for sub_ga in filtered_middle_gas:
           logging.info("Exporting sub group: {}".format(sub_ga))
-          writer.writerow(['', '', sub_ga.sub_name, sub_ga.main, sub_ga.middle, sub_ga.sub, '', '', sub_ga.description, sub_ga.dpt, 'Auto'])
+          ga_name = FormatGaName(sub_ga)
+          ga_description = FormatGaDescription(sub_ga)
+          writer.writerow(['', '', ga_name, sub_ga.main, sub_ga.middle, sub_ga.sub, '', '', ga_description, sub_ga.dpt, 'Auto'])
+
+def FormatGaName(ga):
+  ga_name = ga.sub_name
+  if(ga.target_id != None and ga.target_id != 0):
+    ga_name = ga.target_id + " - " + ga_name
+  return ga_name
+
+def FormatGaDescription(ga):
+  return ga.comment
 
 # ---- Entrypoint ------------------------------------------------------------------------------------------------------
 if __name__ == '__main__':
