@@ -87,7 +87,8 @@ def ParseGroupAddresses(wb, args):
 
     ga = GroupAddress(group_main, group_middle, group_sub, group_main_name, group_middle_name, group_sub_name, target_id, dpt, comment)
     logging.info("Parsed GA: %s" % (str(ga)))
-    gas.append(ga);
+    gas.append(ga)
+
   return gas
 
 def ExportCsv(gas, output_file):
@@ -124,10 +125,15 @@ def FormatGaName(ga):
   ga_name = ga.sub_name
   if(ga.target_id != None and ga.target_id != 0):
     ga_name = ga.target_id + " - " + ga_name
+    ga_name = ga_name.replace('\n', '_')
   return ga_name
 
 def FormatGaDescription(ga):
-  return ga.comment
+  description = ga.comment
+  # Replace line-breaks
+  if(description != None):
+    description = description.replace('\n', '|')
+  return description
 
 # ---- Entrypoint ------------------------------------------------------------------------------------------------------
 if __name__ == '__main__':
