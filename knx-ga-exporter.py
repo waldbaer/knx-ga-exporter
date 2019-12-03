@@ -6,6 +6,7 @@ import traceback
 import argparse
 from openpyxl import load_workbook
 import csv
+from enum import Enum
 
 # ---- Main ------------------------------------------------------------------------------------------------------------
 class GroupAddress:
@@ -28,15 +29,33 @@ def main():
 
   wb = LoadWorkbook(args.input_file)
   gas = ParseGroupAddresses(wb, args)
-  ExportCsv(gas, args.output_file)
+  ExportCsv(args, gas)
 
   logging.info("Statistics: #GA: {}".format(len(gas)))
   logging.info('done.')
+
+class CsvFormat(Enum):
+  format_3_1 = '3/3' # Haupt- Mittel- Unter- Name/Haupt- Mittel- Unter-Adresse
+  format_1_1 = '1/1' # Name / Adresse
+
+  def __str__(self):
+      return self.value
+
+class CsvSeparator(Enum):
+  tabulator = "tabulator"
+  comma = "comma"
+  semicolon = "semicolon"
+
+  def __str__(self):
+      return self.value
 
 def ParseCommandLineArguments():
   parser = argparse.ArgumentParser(description='KNX group address exporter.')
   parser.add_argument('-i', '--input', dest='input_file', required=True, help='Path to XSLX file to be parsed.')
   parser.add_argument('-o', '--output', dest='output_file', required=False, default='knx-ga-addresses.csv', help='Path of exported CSV file.')
+
+  parser.add_argument('--csv-format', default=CsvFormat.format_1_1, type=CsvFormat, choices=list(CsvFormat), help='CSV output format.')
+  parser.add_argument('--csv-separator', default=CsvSeparator.tabulator, type=CsvSeparator, choices=list(CsvSeparator), help='CSV separator.')
 
   parser.add_argument('--ga-sheet-name', default='KNX-Gruppenadressen', help='Name of XLSX sheet containing the KNX group addresses')
   parser.add_argument('--ga-sheet-first-row', default=8, help='First row containing GAs')
@@ -91,10 +110,51 @@ def ParseGroupAddresses(wb, args):
 
   return gas
 
-def ExportCsv(gas, output_file):
-  logging.info("Exporting group addresses into CSV file '{}'".format(output_file))
+def ExportCsv(args, gas):
+  csv_separators = {"tabulator" : '\t',
+                    "comma" : ',',
+                    "semicolon" : ';'}
+  exporter_functions = {"1/1" : ExportCsvFormat1_1,
+                        "3/3" : ExportCsvFormat3_3}
+
+  csv_separator = csv_separators[str(args.csv_separator)]
+  export_function = exporter_functions[str(args.csv_format)]
+  export_function(args.output_file, csv_separator, gas)
+
+def ExportCsvFormat1_1(output_file, csv_separator, gas):
+  logging.info("Exporting group addresses into CSV file '{}'. Format: 1/1, separator:{}".format(output_file, csv_separator))
   with open(output_file, 'w', newline='', encoding='iso-8859-1') as csvfile:
-    writer = csv.writer(csvfile, delimiter=';', quoting=csv.QUOTE_ALL)
+    writer = csv.writer(csvfile, delimiter=csv_separator, quoting=csv.QUOTE_ALL)
+
+    # write headline
+    writer.writerow(["Group name", "Address", "Central", "Unfiltered", "Description", "DatapointType", "Security"])
+
+    main_group_ids = {ga.main for ga in gas}
+    for main_group_id in main_group_ids:
+      filtered_main_gas = list(filter(lambda ga: ga.main == main_group_id, gas))
+      main_group_name = filtered_main_gas[0].main_name
+
+      logging.info("Exporting main group {}: {}".format(main_group_id, main_group_name))
+      writer.writerow([main_group_name, '{}/-/-'.format(main_group_id)] + [''] * 4 + ['Auto'])
+
+      middle_group_ids = {ga.middle for ga in filtered_main_gas}
+      for middle_group_id in middle_group_ids:
+        filtered_middle_gas = list(filter(lambda ga: ga.middle == middle_group_id, filtered_main_gas))
+        middle_group_name = filtered_middle_gas[0].middle_name
+
+        logging.info("Exporting middle group {}/{}: {}".format(main_group_id, middle_group_id, middle_group_name))
+        writer.writerow([middle_group_name, '{}/{}/-'.format(main_group_id, middle_group_id)] + [''] * 4 + ['Auto'])
+
+        for sub_ga in filtered_middle_gas:
+          logging.info("Exporting sub group: {}".format(sub_ga))
+          ga_name = FormatGaName(sub_ga)
+          ga_description = FormatGaDescription(sub_ga)
+          writer.writerow([ga_name, '{}/{}/{}'.format(sub_ga.main, sub_ga.middle, sub_ga.sub), '', '', ga_description, sub_ga.dpt, 'Auto'])
+
+def ExportCsvFormat3_3(output_file, csv_separator, gas):
+  logging.info("Exporting group addresses into CSV file '{}'. Format: 3/3, separator:{}".format(output_file, csv_separator))
+  with open(output_file, 'w', newline='', encoding='iso-8859-1') as csvfile:
+    writer = csv.writer(csvfile, delimiter=csv_separator, quoting=csv.QUOTE_ALL)
 
     # write headline
     writer.writerow(['Main', 'Middle', 'Sub', 'Main', 'Middle', 'Sub', 'Central', 'Unfiltered', 'Description', 'DatapointType','Security'])
