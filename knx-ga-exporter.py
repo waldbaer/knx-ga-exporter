@@ -51,8 +51,10 @@ class CsvSeparator(Enum):
 
 def ParseCommandLineArguments():
   parser = argparse.ArgumentParser(description='KNX group address exporter.')
+
   parser.add_argument('-i', '--input', dest='input_file', required=True, help='Path to XSLX file to be parsed.')
   parser.add_argument('-o', '--output', dest='output_file', required=False, default='knx-ga-addresses.csv', help='Path of exported CSV file.')
+  parser.add_argument('--output-encoding', dest='output_file_encoding', required=False, default='iso-8859-1', help='Output file encoding')
 
   parser.add_argument('--csv-format', default=CsvFormat.format_1_1, type=CsvFormat, choices=list(CsvFormat), help='CSV output format.')
   parser.add_argument('--csv-separator', default=CsvSeparator.tabulator, type=CsvSeparator, choices=list(CsvSeparator), help='CSV separator.')
@@ -119,11 +121,11 @@ def ExportCsv(args, gas):
 
   csv_separator = csv_separators[str(args.csv_separator)]
   export_function = exporter_functions[str(args.csv_format)]
-  export_function(args.output_file, csv_separator, gas)
+  export_function(args.output_file, args.output_file_encoding, csv_separator, gas)
 
-def ExportCsvFormat1_1(output_file, csv_separator, gas):
+def ExportCsvFormat1_1(output_file, output_file_encoding, csv_separator, gas):
   logging.info("Exporting group addresses into CSV file '{}'. Format: 1/1, separator:{}".format(output_file, csv_separator))
-  with open(output_file, 'w', newline='', encoding='iso-8859-1') as csvfile:
+  with open(output_file, 'w', newline='', encoding=output_file_encoding) as csvfile:
     writer = csv.writer(csvfile, delimiter=csv_separator, quoting=csv.QUOTE_ALL)
 
     # write headline
@@ -151,9 +153,9 @@ def ExportCsvFormat1_1(output_file, csv_separator, gas):
           ga_description = FormatGaDescription(sub_ga)
           writer.writerow([ga_name, '{}/{}/{}'.format(sub_ga.main, sub_ga.middle, sub_ga.sub), '', '', ga_description, sub_ga.dpt, 'Auto'])
 
-def ExportCsvFormat3_3(output_file, csv_separator, gas):
+def ExportCsvFormat3_3(output_file, output_file_encoding, csv_separator, gas):
   logging.info("Exporting group addresses into CSV file '{}'. Format: 3/3, separator:{}".format(output_file, csv_separator))
-  with open(output_file, 'w', newline='', encoding='iso-8859-1') as csvfile:
+  with open(output_file, 'w', newline='', encoding=output_file_encoding) as csvfile:
     writer = csv.writer(csvfile, delimiter=csv_separator, quoting=csv.QUOTE_ALL)
 
     # write headline
