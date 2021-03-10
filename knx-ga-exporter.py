@@ -59,7 +59,7 @@ def ParseCommandLineArguments():
   parser.add_argument('--csv-format', default=CsvFormat.format_1_1, type=CsvFormat, choices=list(CsvFormat), help='CSV output format.')
   parser.add_argument('--csv-separator', default=CsvSeparator.tabulator, type=CsvSeparator, choices=list(CsvSeparator), help='CSV separator.')
 
-  parser.add_argument('--ga-sheet-name', default='KNX-Gruppenadressen', help='Name of XLSX sheet containing the KNX group addresses')
+  parser.add_argument('--ga-sheet-name', default='KNX Group Addresses', help='Name of XLSX sheet containing the KNX group addresses')
   parser.add_argument('--ga-sheet-first-row', default=8, help='First row containing GAs')
   parser.add_argument('--ga-sheet-last-column', default=10, help='Last column')
 
