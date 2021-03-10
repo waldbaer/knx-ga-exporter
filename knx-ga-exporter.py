@@ -9,6 +9,8 @@ import csv
 from enum import Enum
 
 # ---- Main ------------------------------------------------------------------------------------------------------------
+__version__ = '1.0.0'
+
 class GroupAddress:
   def __init__(self, main, middle, sub, main_name, middle_name, sub_name, target_id, dpt, comment):
     self.main=main
@@ -51,6 +53,7 @@ class CsvSeparator(Enum):
 
 def ParseCommandLineArguments():
   parser = argparse.ArgumentParser(description='KNX group address exporter.')
+  parser.add_argument('--version', action='version', version='%(prog)s {version}'.format(version=__version__))
 
   parser.add_argument('-i', '--input', dest='input_file', required=True, help='Path to XSLX file to be parsed.')
   parser.add_argument('-o', '--output', dest='output_file', required=False, default='knx-ga-addresses.csv', help='Path of exported CSV file.')
