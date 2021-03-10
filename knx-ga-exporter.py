@@ -35,8 +35,8 @@ def main():
   logging.info('done.')
 
 class CsvFormat(Enum):
-  format_3_1 = '3/3' # Haupt- Mittel- Unter- Name/Haupt- Mittel- Unter-Adresse
-  format_1_1 = '1/1' # Name / Adresse
+  format_3_1 = '3/3' # Main- Middle- Sub- Name/Main- Middle- Sub-Address
+  format_1_1 = '1/1' # Name / Address
 
   def __str__(self):
       return self.value
