@@ -1,4 +1,6 @@
-[![MIT License](https://img.shields.io/github/license/bwaldvogel/openmoves.svg)](https://opensource.org/licenses/MIT)
+[![MIT License](https://img.shields.io/github/license/waldbaer/knx-ga-exporter?style=flat-square)](https://opensource.org/licenses/MIT)
+[![GitHub issues open](https://img.shields.io/github/issues/waldbaer/knx-ga-exporter?style=flat-square)](https://github.com/waldbaer/knx-ga-exporter/issues)
+
 
 # KNX GroupAddress Exporter #
 A simple converter for spreadsheets to KNX ETS group address configurations in CSV format.
