@@ -191,6 +191,9 @@ def FormatGaName(ga):
   if(ga.target_id != None and ga.target_id != 0):
     ga_name = ga.target_id + " - " + ga_name
     ga_name = ga_name.replace('\n', '_')
+  # Check if the mandatory name is configured.
+  if not ga_name:
+    raise ValueError("Name of GA %s/%s/%s is missing!" % (ga.main, ga.middle, ga.sub))
   return ga_name
 
 def FormatGaDescription(ga):
