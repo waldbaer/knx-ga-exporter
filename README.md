@@ -13,8 +13,8 @@ Converter allows to use all possible features of the spreadsheet tools like Exce
 
 ## Requirements ##
  - Python 3
- - [virtualenv][virtualenv]
- - [pip (package manager)][pip]
+ - [virtualenv](https://virtualenv.readthedocs.org/en/latest/)
+ - [pip (package manager)](http://en.wikipedia.org/wiki/Pip_%28package_manager%29)
  - [openpyxl](https://pypi.org/project/openpyxl/)
 
 
