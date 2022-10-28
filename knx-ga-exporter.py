@@ -23,7 +23,10 @@ class GroupAddress:
     self.dpt=dpt
     self.comment=comment
   def __str__(self):
-    return '{}/{}/{} {}|{}|{}'.format(self.main, self.middle, self.sub, self.main_name, self.middle_name, self.sub_name)
+    addr_formatted = '{}/{}/{}'.format(self.main, self.middle, self.sub)
+    return '{:8s} | {} | {} | {} | {} - {}'.format(addr_formatted,
+                                                   self.main_name, self.middle_name,
+                                                   self.dpt, self.target_id, self.sub_name)
 
 def main():
   args = ParseCommandLineArguments()
@@ -139,7 +142,7 @@ def ExportCsvFormat1_1(output_file, output_file_encoding, csv_separator, gas):
       filtered_main_gas = list(filter(lambda ga: ga.main == main_group_id, gas))
       main_group_name = filtered_main_gas[0].main_name
 
-      logging.info("Exporting main group {}: {}".format(main_group_id, main_group_name))
+      logging.info("Exporting main group     {:<8d} | {} |".format(main_group_id, main_group_name))
       writer.writerow([main_group_name, '{}/-/-'.format(main_group_id)] + [''] * 4 + ['Auto'])
 
       middle_group_ids = {ga.middle for ga in filtered_main_gas}
@@ -147,11 +150,13 @@ def ExportCsvFormat1_1(output_file, output_file_encoding, csv_separator, gas):
         filtered_middle_gas = list(filter(lambda ga: ga.middle == middle_group_id, filtered_main_gas))
         middle_group_name = filtered_middle_gas[0].middle_name
 
-        logging.info("Exporting middle group {}/{}: {}".format(main_group_id, middle_group_id, middle_group_name))
+        logging.info("Exporting   middle group {:<8s} | {} | {} |".format("{}/{}".format(main_group_id, middle_group_id),
+                                                                        " " * len(main_group_name),
+                                                                        middle_group_name))
         writer.writerow([middle_group_name, '{}/{}/-'.format(main_group_id, middle_group_id)] + [''] * 4 + ['Auto'])
 
         for sub_ga in filtered_middle_gas:
-          logging.info("Exporting sub group: {}".format(sub_ga))
+          logging.info("Exporting     sub group: {}".format(sub_ga))
           ga_name = FormatGaName(sub_ga)
           ga_description = FormatGaDescription(sub_ga)
           writer.writerow([ga_name, '{}/{}/{}'.format(sub_ga.main, sub_ga.middle, sub_ga.sub), '', '', ga_description, sub_ga.dpt, 'Auto'])
