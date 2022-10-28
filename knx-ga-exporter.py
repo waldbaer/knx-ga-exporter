@@ -1,4 +1,15 @@
 #!/usr/bin/env python3
+"""
+Revision History
+-----------------------------------------------------------------------------------------------------------------------
+Version  Date        Description
+-----------------------------------------------------------------------------------------------------------------------
+1.0.0    2021-03-10  Initial Release
+1.0.1    2022-10-28  Detect missing group address (GA)
+                     Handling of encoding errors.
+                     Improved log output formatting.
+-----------------------------------------------------------------------------------------------------------------------
+"""
 
 import logging
 import sys
@@ -9,7 +20,10 @@ import csv
 from enum import Enum
 
 # ---- Main ------------------------------------------------------------------------------------------------------------
-__version__ = '1.0.0'
+__author__ = "Sebastian Waldvogel"
+__copyright__ = "Copyright 2019-2022, Sebastian Waldvogel"
+__license__ = "MIT"
+__version__ = '1.0.1'
 
 def main():
   args = ParseCommandLineArguments()
