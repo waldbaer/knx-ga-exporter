@@ -11,23 +11,6 @@ from enum import Enum
 # ---- Main ------------------------------------------------------------------------------------------------------------
 __version__ = '1.0.0'
 
-class GroupAddress:
-  def __init__(self, main, middle, sub, main_name, middle_name, sub_name, target_id, dpt, comment):
-    self.main=main
-    self.middle=middle
-    self.sub=sub
-    self.main_name=main_name
-    self.middle_name=middle_name
-    self.sub_name=sub_name
-    self.target_id=target_id
-    self.dpt=dpt
-    self.comment=comment
-  def __str__(self):
-    addr_formatted = '{}/{}/{}'.format(self.main, self.middle, self.sub)
-    return '{:8s} | {} | {} | {} | {} - {}'.format(addr_formatted,
-                                                   self.main_name, self.middle_name,
-                                                   self.dpt, self.target_id, self.sub_name)
-
 def main():
   args = ParseCommandLineArguments()
   logging.basicConfig(level=logging.DEBUG)
@@ -53,6 +36,41 @@ class CsvSeparator(Enum):
 
   def __str__(self):
       return self.value
+
+class CsvWriter:
+  def __init__(self, file, delimiter, quoting):
+    self.writer = csv.writer(file, delimiter=delimiter, quoting=quoting)
+
+  def WriteRow(self, row):
+    try:
+      self.writer.writerow(row)
+    except UnicodeEncodeError as e:
+      logging.error("""Failed to encode the CSV row string '{}'.
+Some characters can most-likely not be represented in the selected encoding.
+Please use only use characters supported by the encoding.
+CSV writer error details: {}
+
+Aborting further CSV file generation.""".format(row, e))
+      sys.exit(1)
+    except:
+      pass
+
+class GroupAddress:
+  def __init__(self, main, middle, sub, main_name, middle_name, sub_name, target_id, dpt, comment):
+    self.main=main
+    self.middle=middle
+    self.sub=sub
+    self.main_name=main_name
+    self.middle_name=middle_name
+    self.sub_name=sub_name
+    self.target_id=target_id
+    self.dpt=dpt
+    self.comment=comment
+  def __str__(self):
+    addr_formatted = '{}/{}/{}'.format(self.main, self.middle, self.sub)
+    return '{:8s} | {} | {} | {} | {} - {}'.format(addr_formatted,
+                                                   self.main_name, self.middle_name,
+                                                   self.dpt, self.target_id, self.sub_name)
 
 def ParseCommandLineArguments():
   parser = argparse.ArgumentParser(description='KNX group address exporter.')
@@ -132,10 +150,10 @@ def ExportCsv(args, gas):
 def ExportCsvFormat1_1(output_file, output_file_encoding, csv_separator, gas):
   logging.info("Exporting group addresses into CSV file '{}'. Format: 1/1, separator:{}".format(output_file, csv_separator))
   with open(output_file, 'w', newline='', encoding=output_file_encoding) as csvfile:
-    writer = csv.writer(csvfile, delimiter=csv_separator, quoting=csv.QUOTE_ALL)
+    writer = CsvWriter(csvfile, csv_separator, csv.QUOTE_ALL)
 
     # write headline
-    writer.writerow(["Group name", "Address", "Central", "Unfiltered", "Description", "DatapointType", "Security"])
+    writer.WriteRow(["Group name", "Address", "Central", "Unfiltered", "Description", "DatapointType", "Security"])
 
     main_group_ids = {ga.main for ga in gas}
     for main_group_id in main_group_ids:
@@ -143,7 +161,7 @@ def ExportCsvFormat1_1(output_file, output_file_encoding, csv_separator, gas):
       main_group_name = filtered_main_gas[0].main_name
 
       logging.info("Exporting main group     {:<8d} | {} |".format(main_group_id, main_group_name))
-      writer.writerow([main_group_name, '{}/-/-'.format(main_group_id)] + [''] * 4 + ['Auto'])
+      writer.WriteRow([main_group_name, '{}/-/-'.format(main_group_id)] + [''] * 4 + ['Auto'])
 
       middle_group_ids = {ga.middle for ga in filtered_main_gas}
       for middle_group_id in middle_group_ids:
@@ -153,21 +171,21 @@ def ExportCsvFormat1_1(output_file, output_file_encoding, csv_separator, gas):
         logging.info("Exporting   middle group {:<8s} | {} | {} |".format("{}/{}".format(main_group_id, middle_group_id),
                                                                         " " * len(main_group_name),
                                                                         middle_group_name))
-        writer.writerow([middle_group_name, '{}/{}/-'.format(main_group_id, middle_group_id)] + [''] * 4 + ['Auto'])
+        writer.WriteRow([middle_group_name, '{}/{}/-'.format(main_group_id, middle_group_id)] + [''] * 4 + ['Auto'])
 
         for sub_ga in filtered_middle_gas:
           logging.info("Exporting     sub group: {}".format(sub_ga))
           ga_name = FormatGaName(sub_ga)
           ga_description = FormatGaDescription(sub_ga)
-          writer.writerow([ga_name, '{}/{}/{}'.format(sub_ga.main, sub_ga.middle, sub_ga.sub), '', '', ga_description, sub_ga.dpt, 'Auto'])
+          writer.WriteRow([ga_name, '{}/{}/{}'.format(sub_ga.main, sub_ga.middle, sub_ga.sub), '', '', ga_description, sub_ga.dpt, 'Auto'])
 
 def ExportCsvFormat3_3(output_file, output_file_encoding, csv_separator, gas):
   logging.info("Exporting group addresses into CSV file '{}'. Format: 3/3, separator:{}".format(output_file, csv_separator))
   with open(output_file, 'w', newline='', encoding=output_file_encoding) as csvfile:
-    writer = csv.writer(csvfile, delimiter=csv_separator, quoting=csv.QUOTE_ALL)
+    writer = CsvWriter(file=csvfile, delimiter=csv_separator, quoting=csv.QUOTE_ALL)
 
     # write headline
-    writer.writerow(['Main', 'Middle', 'Sub', 'Main', 'Middle', 'Sub', 'Central', 'Unfiltered', 'Description', 'DatapointType','Security'])
+    writer.WriteRow(['Main', 'Middle', 'Sub', 'Main', 'Middle', 'Sub', 'Central', 'Unfiltered', 'Description', 'DatapointType','Security'])
 
     main_group_ids = {ga.main for ga in gas}
     for main_group_id in main_group_ids:
@@ -175,7 +193,7 @@ def ExportCsvFormat3_3(output_file, output_file_encoding, csv_separator, gas):
       main_group_name = filtered_main_gas[0].main_name
 
       logging.info("Exporting main group {}: {}".format(main_group_id, main_group_name))
-      writer.writerow([main_group_name, '', '', main_group_id] + [''] * 6 + ['Auto'])
+      writer.WriteRow([main_group_name, '', '', main_group_id] + [''] * 6 + ['Auto'])
 
       middle_group_ids = {ga.middle for ga in filtered_main_gas}
       for middle_group_id in middle_group_ids:
@@ -183,13 +201,13 @@ def ExportCsvFormat3_3(output_file, output_file_encoding, csv_separator, gas):
         middle_group_name = filtered_middle_gas[0].middle_name
 
         logging.info("Exporting middle group {}/{}: {}".format(main_group_id, middle_group_id, middle_group_name))
-        writer.writerow(['', middle_group_name, '', main_group_id, middle_group_id] + [''] * 5 + ['Auto'])
+        writer.WriteRow(['', middle_group_name, '', main_group_id, middle_group_id] + [''] * 5 + ['Auto'])
 
         for sub_ga in filtered_middle_gas:
           logging.info("Exporting sub group: {}".format(sub_ga))
           ga_name = FormatGaName(sub_ga)
           ga_description = FormatGaDescription(sub_ga)
-          writer.writerow(['', '', ga_name, sub_ga.main, sub_ga.middle, sub_ga.sub, '', '', ga_description, sub_ga.dpt, 'Auto'])
+          writer.WriteRow(['', '', ga_name, sub_ga.main, sub_ga.middle, sub_ga.sub, '', '', ga_description, sub_ga.dpt, 'Auto'])
 
 def FormatGaName(ga):
   ga_name = ga.sub_name
