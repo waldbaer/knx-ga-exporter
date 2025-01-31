@@ -53,7 +53,7 @@ def parse_group_addresses(wb: openpyxl.workbook, config: dict) -> list[GroupAddr
         comment = row[config.ga_sheet_comment].value
 
         # Skip invalid / incomplete GAs
-        if dpt is None or dpt == 0 or dpt is None or compiled_ga is None or compiled_ga == 0:
+        if (dpt is None) or (dpt == 0) or (dpt is None) or (compiled_ga is None) or (compiled_ga == 0):
             continue
 
         ga = GroupAddress(

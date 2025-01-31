@@ -82,20 +82,6 @@ def read_file(path: str, encoding: str) -> str:
             "tests/expected_outputs/KNX-planning-example_format_3_3.csv",
             ".*Parsed GA.*1/2/1.*Top Floor Bedroom.*",
         ),
-        # (
-        #    "tests/inputs/home.waldvogels.xlsx",
-        #    OUTPUT_ENCODING_DEFAULT,
-        #    "--csv-format 1/1 -vv",
-        #    "tests/expected_outputs/home.waldvogels_format_1_1.csv",
-        #    "DEBUG.*",
-        # ),
-        # (
-        #    "tests/inputs/home.waldvogels.xlsx",
-        #    OUTPUT_ENCODING_DEFAULT,
-        #    "--csv-format 3/3",
-        #    "tests/expected_outputs/home.waldvogels_format_3_3.csv",
-        #    ".*",
-        # ),
     ],
 )
 def test_ct_valid_conversion(
