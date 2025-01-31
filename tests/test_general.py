@@ -54,7 +54,7 @@ def test_ct_version(capsys: pytest.CaptureFixture[str]) -> None:
             r"No such file or directory.*PATH_TO_UNKNOWN_FILE.XLSX",
         ),
         (
-            "--csv-format 3/x",
+            "--output.format 3/x",
             r"invalid.*3/x",
         ),
     ],

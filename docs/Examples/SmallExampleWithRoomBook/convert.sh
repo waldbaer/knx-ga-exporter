@@ -6,4 +6,4 @@ INPUT_SHEET=./KNX-planning-example.xlsx
 CSV_OUTPUT=./knx-group-addresses.csv
 
 # ---- run ----
-knx-ga-exporter --input ${INPUT_SHEET} --output ${CSV_OUTPUT} --verbose
+knx-ga-exporter --input ${INPUT_SHEET} --output.file ${CSV_OUTPUT} --verbose

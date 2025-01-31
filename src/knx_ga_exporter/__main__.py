@@ -60,7 +60,7 @@ def _main_logic(config: dict) -> int:
     """
     configure_logging(config.verbose)
     wb = load_workbook(config.input)
-    gas = parse_group_addresses(wb, config)
+    gas = parse_group_addresses(wb, config.layout)
     export_csv(config, gas)
 
     logging.debug("Statistics: #GA: %s", len(gas))

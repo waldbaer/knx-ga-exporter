@@ -71,28 +71,28 @@ def read_file(path: str, encoding: str) -> str:
         (
             "tests/inputs/KNX-planning-example.xlsx",
             OUTPUT_ENCODING_DEFAULT,
-            "--csv-format 1/1",
+            "--output.format 1/1",
             "tests/expected_outputs/KNX-planning-example_format_1_1.csv",
             ".*Loading XLSX input file.*KNX-planning-example.xlsx",
         ),
         (
             "tests/inputs/KNX-planning-example.xlsx",
             OUTPUT_ENCODING_DEFAULT,
-            "--csv-format 3/3 -v",
+            "--output.format 3/3 -v",
             "tests/expected_outputs/KNX-planning-example_format_3_3.csv",
             ".*Parsed GA.*1/2/1.*Top Floor Bedroom.*",
         ),
         (
             "tests/inputs/KNX-planning-example.xlsx",
             OUTPUT_ENCODING_DEFAULT,
-            "--csv-separator semicolon",
+            "--output.separator semicolon",
             "tests/expected_outputs/KNX-planning-example_format_1_1_separator_semicolon.csv",
             "INFO.*format: 1/1.*separator: ';'",
         ),
         (
             "tests/inputs/KNX-planning-example.xlsx",
             OUTPUT_ENCODING_DEFAULT,
-            "--csv-separator comma",
+            "--output.separator comma",
             "tests/expected_outputs/KNX-planning-example_format_1_1_separator_comma.csv",
             "INFO.*format: 1/1.*separator: ','",
         ),
@@ -123,7 +123,7 @@ def test_ct_valid_conversion(
     output_csv_path = f"{tmp_path}/conversion_result.csv"
 
     cli_args = (
-        f"--input {input_file_path} --output {output_csv_path} --output-encoding {output_encoding} "
+        f"--input {input_file_path} --output.file {output_csv_path} --output.encoding {output_encoding} "
         + f"{extra_cli_args}"
     )
     with caplog.at_level(logging.DEBUG):
@@ -167,7 +167,7 @@ def test_ct_invalid_conversion(
     """
     output_csv_path = f"{tmp_path}/conversion_result.csv"
 
-    cli_args = f"--input {input_file_path} --output {output_csv_path} "
+    cli_args = f"--input {input_file_path} --output.file {output_csv_path} "
 
     with caplog.at_level(logging.ERROR):
         cli_result = run_cli(cli_args, capsys)

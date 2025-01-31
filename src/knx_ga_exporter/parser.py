@@ -25,32 +25,32 @@ def load_workbook(input_file: str) -> openpyxl.workbook:
     return wb
 
 
-def parse_group_addresses(wb: openpyxl.workbook, config: dict) -> list[GroupAddress]:
+def parse_group_addresses(wb: openpyxl.workbook, layout_config: dict) -> list[GroupAddress]:
     """Parse the group addresses.
 
     Arguments:
         wb: Workbook
-        config: Config hierarchy
+        layout_config: Workbook layout configuration
 
     Returns:
         Parsed KNX group addresses
     """
     gas = []
-    ws = wb[config.ga_sheet_name]
-    for row in ws.iter_rows(min_row=config.ga_sheet_first_row, max_col=config.ga_sheet_last_column):
-        target_id = row[config.ga_sheet_target_ID_column].value
+    ws = wb[layout_config.sheet_name]
+    for row in ws.iter_rows(min_row=layout_config.first_row, max_col=layout_config.last_column):
+        target_id = row[layout_config.target_ID_column].value
 
-        group_main = row[config.ga_sheet_main_ID_column].value
-        group_middle = row[config.ga_sheet_middle_ID_column].value
-        group_sub = row[config.ga_sheet_sub_ID_column].value
+        group_main = row[layout_config.main_ID_column].value
+        group_middle = row[layout_config.middle_ID_column].value
+        group_sub = row[layout_config.sub_ID_column].value
 
-        group_main_name = row[config.ga_sheet_main_name_column].value
-        group_middle_name = row[config.ga_sheet_middle_name_column].value
-        group_sub_name = row[config.ga_sheet_sub_name_column].value
+        group_main_name = row[layout_config.main_name_column].value
+        group_middle_name = row[layout_config.middle_name_column].value
+        group_sub_name = row[layout_config.sub_name_column].value
 
-        dpt = row[config.ga_sheet_dpt_column].value
-        compiled_ga = row[config.ga_sheet_compiled_GA_column].value
-        comment = row[config.ga_sheet_comment].value
+        dpt = row[layout_config.dpt_column].value
+        compiled_ga = row[layout_config.compiled_GA_column].value
+        comment = row[layout_config.comment_column].value
 
         # Skip invalid / incomplete GAs
         if dpt is None or dpt == 0 or dpt is None or compiled_ga is None or compiled_ga == 0:

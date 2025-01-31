@@ -86,18 +86,18 @@ def export_csv(config: dict, group_addresses: list[GroupAddress]) -> None:
     csv_separators = {"tabulator": "\t", "comma": ",", "semicolon": ";"}
     exporter_functions = {"1/1": _export_csv_format_1_1, "3/3": _export_csv_format_3_3}
 
-    csv_separator = csv_separators[str(config.csv_separator)]
+    csv_separator = csv_separators[str(config.output.separator)]
 
     logging.info(
         "Exporting group addresses into CSV file '%s'. format: %s, separator: '%s', encoding: %s",
-        config.output,
-        config.csv_format,
+        config.output.file,
+        config.output.format,
         csv_separator.replace("\t", "[TAB]"),
-        config.output_file_encoding,
+        config.output.encoding,
     )
 
-    export_function = exporter_functions[str(config.csv_format)]
-    export_function(config.output, config.output_file_encoding, csv_separator, group_addresses)
+    export_function = exporter_functions[str(config.output.format)]
+    export_function(config.output.file, config.output.encoding, csv_separator, group_addresses)
 
 
 def _filter_by_main_id(group_addresses: list[GroupAddress], main_id: int) -> list[GroupAddress]:

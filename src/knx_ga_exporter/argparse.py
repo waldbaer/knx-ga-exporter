@@ -56,51 +56,52 @@ def parse_config(prog: str, version: str, copy_right: str, author: str, arg_list
     arg_parser.add_argument("-i", "--input", required=True, help="Path to XSLX file to be parsed.")
     arg_parser.add_argument(
         "-o",
-        "--output",
+        "--output.file",
         required=False,
         default="knx-ga-addresses.csv",
         help="Path of exported CSV file.",
     )
     arg_parser.add_argument(
-        "--output-encoding",
-        dest="output_file_encoding",
+        "--output.encoding",
         required=False,
         default=OUTPUT_ENCODING_DEFAULT,
         help="Output file encoding",
     )
 
     arg_parser.add_argument(
-        "--csv-format",
+        "--output.format",
         default=str(CsvFormat.format_1_1),
         choices=[str(CsvFormat.format_1_1), str(CsvFormat.format_3_3)],
-        help="CSV output format.",
+        help="CSV output format",
     )
     arg_parser.add_argument(
-        "--csv-separator",
+        "--output.separator",
         default=CsvSeparator.tabulator,
         type=CsvSeparator,
-        help="CSV separator.",
+        help="CSV separator",
     )
 
     # ---- Sheet Config ----
     arg_parser.add_argument(
-        "--ga-sheet-name", default="KNX Group Addresses", help="Name of XLSX sheet containing the KNX group addresses"
+        "--layout.sheet-name",
+        default="KNX Group Addresses",
+        help="Name of XLSX sheet containing the KNX group addresses",
     )
-    arg_parser.add_argument("--ga-sheet-first-row", default=8, help="First row containing GAs")
-    arg_parser.add_argument("--ga-sheet-last-column", default=10, help="Last column")
+    arg_parser.add_argument("--layout.first-row", default=8, help="First row containing GAs")
+    arg_parser.add_argument("--layout.last-column", default=10, help="Last column")
 
-    arg_parser.add_argument("--ga-sheet-main-ID-column", default=0, help="Column containing main ID of KNX GA")
-    arg_parser.add_argument("--ga-sheet-middle-ID-column", default=2, help="Column containing middle ID of KNX GA")
-    arg_parser.add_argument("--ga-sheet-sub-ID-column", default=4, help="Column containing sub ID of KNX GA")
+    arg_parser.add_argument("--layout.main-ID-column", default=0, help="Column containing main ID of KNX GA")
+    arg_parser.add_argument("--layout.middle-ID-column", default=2, help="Column containing middle ID of KNX GA")
+    arg_parser.add_argument("--layout.sub-ID-column", default=4, help="Column containing sub ID of KNX GA")
 
-    arg_parser.add_argument("--ga-sheet-main-name-column", default=1, help="Column containing main name of KNX GA")
-    arg_parser.add_argument("--ga-sheet-middle-name-column", default=3, help="Column containing middle name of KNX GA")
-    arg_parser.add_argument("--ga-sheet-sub-name-column", default=8, help="Column containing sub name of KNX GA")
+    arg_parser.add_argument("--layout.main-name-column", default=1, help="Column containing main name of KNX GA")
+    arg_parser.add_argument("--layout.middle-name-column", default=3, help="Column containing middle name of KNX GA")
+    arg_parser.add_argument("--layout.sub-name-column", default=8, help="Column containing sub name of KNX GA")
 
-    arg_parser.add_argument("--ga-sheet-dpt-column", default=5, help="Column containing datapoint type of KNX GA")
-    arg_parser.add_argument("--ga-sheet-target-ID-column", default=6, help="Column containing target ID KNX GA")
-    arg_parser.add_argument("--ga-sheet-compiled-GA-column", default=7, help="Column containing full accumulated GA")
-    arg_parser.add_argument("--ga-sheet-comment", default=9, help="Column containing GA comment")
+    arg_parser.add_argument("--layout.dpt-column", default=5, help="Column containing datapoint type of KNX GA")
+    arg_parser.add_argument("--layout.target-ID-column", default=6, help="Column containing target ID KNX GA")
+    arg_parser.add_argument("--layout.compiled-GA-column", default=7, help="Column containing full accumulated GA")
+    arg_parser.add_argument("--layout.comment-column", default=9, help="Column containing GA comment")
 
     # ---- Finally parse the inputs  ----
     config = arg_parser.parse_args(args=arg_list)
