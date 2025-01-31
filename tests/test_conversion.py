@@ -82,6 +82,20 @@ def read_file(path: str, encoding: str) -> str:
             "tests/expected_outputs/KNX-planning-example_format_3_3.csv",
             ".*Parsed GA.*1/2/1.*Top Floor Bedroom.*",
         ),
+        (
+            "tests/inputs/KNX-planning-example.xlsx",
+            OUTPUT_ENCODING_DEFAULT,
+            "--csv-separator semicolon",
+            "tests/expected_outputs/KNX-planning-example_format_1_1_separator_semicolon.csv",
+            "INFO.*format: 1/1.*separator: ';'",
+        ),
+        (
+            "tests/inputs/KNX-planning-example.xlsx",
+            OUTPUT_ENCODING_DEFAULT,
+            "--csv-separator comma",
+            "tests/expected_outputs/KNX-planning-example_format_1_1_separator_comma.csv",
+            "INFO.*format: 1/1.*separator: ','",
+        ),
     ],
 )
 def test_ct_valid_conversion(

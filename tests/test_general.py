@@ -1,6 +1,7 @@
 """Test of general commands."""
 
 import importlib
+import logging
 import os
 import re
 
@@ -49,20 +50,31 @@ def test_ct_version(capsys: pytest.CaptureFixture[str]) -> None:
             r"input.*is required but not included",
         ),
         (
+            "--input PATH_TO_UNKNOWN_FILE.XLSX",
+            r"No such file or directory.*PATH_TO_UNKNOWN_FILE.XLSX",
+        ),
+        (
             "--csv-format 3/x",
             r"invalid.*3/x",
         ),
     ],
 )
-def test_ct_invalid_arguments(cli_args: str, expected_output: str, capsys: pytest.CaptureFixture[str]) -> None:
+def test_ct_invalid_arguments(
+    cli_args: str,
+    expected_output: str,
+    capsys: pytest.CaptureFixture[str],
+    caplog: pytest.LogCaptureFixture,
+) -> None:
     """Test that invalid cli arguments are detected.
 
     Arguments:
         cli_args: Tested command line arguments
         expected_output: Expected output (RegEx)
         capsys: System capture
+        caplog: Logging capture
     """
-    cli_result = run_cli(cli_args, capsys)
-    assert cli_result.exit_code != os.EX_OK
+    with caplog.at_level(logging.DEBUG):
+        cli_result = run_cli(cli_args, capsys)
+        assert cli_result.exit_code != os.EX_OK
 
-    assert re.search(expected_output, cli_result.stderr, re.MULTILINE)
+    assert re.search(expected_output, cli_result.stderr) or re.search(expected_output, caplog.text)

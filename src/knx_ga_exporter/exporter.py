@@ -89,7 +89,7 @@ def export_csv(config: dict, group_addresses: list[GroupAddress]) -> None:
     csv_separator = csv_separators[str(config.csv_separator)]
 
     logging.info(
-        "Exporting group addresses into CSV file '%s'. format: %s, separator: %s, encoding: %s",
+        "Exporting group addresses into CSV file '%s'. format: %s, separator: '%s', encoding: %s",
         config.output,
         config.csv_format,
         csv_separator.replace("\t", "[TAB]"),
