@@ -71,14 +71,14 @@ def read_file(path: str, encoding: str) -> str:
         (
             "tests/inputs/KNX-planning-example.xlsx",
             OUTPUT_ENCODING_DEFAULT,
-            "--output.format 1/1",
+            "--output.format 1/1 -v",
             "tests/expected_outputs/KNX-planning-example_format_1_1.csv",
             ".*Loading XLSX input file.*KNX-planning-example.xlsx",
         ),
         (
             "tests/inputs/KNX-planning-example.xlsx",
             OUTPUT_ENCODING_DEFAULT,
-            "--output.format 3/3 -v",
+            "--output.format 3/3 -vv",
             "tests/expected_outputs/KNX-planning-example_format_3_3.csv",
             ".*Parsed GA.*1/2/1.*Top Floor Bedroom.*",
         ),

@@ -48,7 +48,7 @@ def parse_config(prog: str, version: str, copy_right: str, author: str, arg_list
         "-v",
         "--verbose",
         action="count",
-        default=1,
+        default=0,
         help="Increase log-level. -v: INFO, -vv DEBUG. Default: WARN/ERROR",
     )
 

@@ -15,7 +15,7 @@ def configure_logging(verbosity_level: int) -> None:
     log_level = logging.WARN
     if verbosity_level == 1:
         log_level = logging.INFO
-    else:  # args.verbose >= 2
+    elif verbosity_level >= 2:
         log_level = logging.DEBUG
 
     logging.basicConfig(level=log_level, format="%(asctime)s %(levelname)s: %(message)s", datefmt="%Y-%m-%d %H:%M:%S")
