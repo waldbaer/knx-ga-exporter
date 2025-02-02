@@ -96,6 +96,13 @@ def read_file(path: str, encoding: str) -> str:
             "tests/expected_outputs/KNX-planning-example_format_1_1_separator_comma.csv",
             "INFO.*format: 1/1.*separator: ','",
         ),
+        (
+            "tests/inputs/custom-layout.xlsx",
+            OUTPUT_ENCODING_DEFAULT,
+            "--config tests/inputs/custom-layout-config.json",
+            "tests/expected_outputs/custom-layout.csv",
+            ".*",
+        ),
     ],
 )
 def test_ct_valid_conversion(
