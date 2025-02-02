@@ -13,9 +13,9 @@ from knx_ga_exporter.group_address import GroupAddress
 class CsvFormat(Enum):
     """CSV format types."""
 
-    # Main- Middle- Sub- Name/Main- Middle- Sub-Address
-    format_3_3 = "3/3"  # pylint: disable=invalid-name;reason=camel_case style wanted for cli param
     # Name / Address
+    format_3_3 = "3/3"  # pylint: disable=invalid-name;reason=camel_case style wanted for cli param
+    # Main- Middle- Sub- Name/Main- Middle- Sub-Address
     format_1_1 = "1/1"  # pylint: disable=invalid-name;reason=camel_case style wanted for cli param
 
     def __str__(self) -> str:

@@ -72,13 +72,24 @@ def parse_config(prog: str, version: str, copy_right: str, author: str, arg_list
         "--output.format",
         default=str(CsvFormat.format_1_1),
         choices=[str(CsvFormat.format_1_1), str(CsvFormat.format_3_3)],
-        help="CSV output format",
+        help="""CSV output format.
+
+Possible formats:
+1/1: Name / Address
+3/3: Main- Middle- Sub- Name/Main- Middle- Sub-Address
+""",
     )
     arg_parser.add_argument(
         "--output.separator",
         default=CsvSeparator.tabulator,
         type=CsvSeparator,
-        help="CSV separator",
+        help="""CSV separator.
+
+Possible separators:
+tabulator: [TAB]
+comma:     ,
+semicolon: ;
+""",
     )
 
     # ---- Sheet Config ----

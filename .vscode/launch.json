@@ -9,7 +9,7 @@
       "type": "debugpy",
       "request": "launch",
       "program": "${cwd}/.venv/bin/knx-ga-exporter",
-      "args": ["--input", "docs/Examples/SmallExampleWithRoomBook/KNX-planning-example.xlsx"],
+      "args": ["--input.file", "docs/Examples/01-SmallExampleWithRoomBook/KNX-planning-example.xlsx"],
       "justMyCode": true
     },
     {
