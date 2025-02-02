@@ -55,7 +55,7 @@ pip install .
 
 Create / design all needed KNX group addresses in an spreadsheet using Excel / LibreOffice XLSX document:
 
-<img src="docs/images/example-spreadsheet.png" title="Design KNX GroupAddresses in spreadsheet" />
+<img src="https://github.com/waldbaer/knx-ga-exporter/blob/master/docs/images/example-spreadsheet.png?raw=true" title="Design KNX GroupAddresses in spreadsheet" />
 
 
 Export the spreadsheet contents as CSV file:
@@ -98,9 +98,9 @@ The exported CSV can be found in `knx-group-addresses.csv`:
 - Edit -> Import Group Addresses -> Select the generated CSV file.
 - Voila! New group addresses are added or existing addresses got renamed.
 
-  <img src="docs/images/ets-import.png" title="Design KNX GroupAddresses in spreadsheet" width="300" />
+  <img src="https://github.com/waldbaer/knx-ga-exporter/blob/master/docs/images/ets-import.png?raw=true" title="Design KNX GroupAddresses in spreadsheet" width="300" />
 
-  <img src="docs/images/est-import-result.png" title="Imported KNX GroupAddresses in ETS" />
+  <img src="https://github.com/waldbaer/knx-ga-exporter/blob/master/docs/images/est-import-result.png?raw=true" title="Imported KNX GroupAddresses in ETS" />
 
 
 _Hint_: The KNX ETS application will not automatically delete group addresses not contained in the CSV file anymore. A cleanup must be done manually.
