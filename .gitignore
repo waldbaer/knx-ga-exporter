@@ -1,11 +1,8 @@
 # LibreOffice editing
 *~lock*
 
-# Typical output files
+# Default output files
 knx-ga-addresses.csv
-
-# Configuration containing credentials
-*config.json
 
 # git
 *.orig

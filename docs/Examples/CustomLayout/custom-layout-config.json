@@ -1,0 +1,16 @@
+{
+  "layout": {
+    "sheet_name": "KNX GAs",
+    "first_row": 4,
+    "last_column": 10,
+    "main_ID_column": 1,
+    "middle_ID_column": 3,
+    "sub_ID_column": 6,
+    "main_name_column": 0,
+    "middle_name_column": 2,
+    "sub_name_column": 7,
+    "dpt_column": 4,
+    "target_ID_column": 5,
+    "comment_column": 8
+  }
+}
