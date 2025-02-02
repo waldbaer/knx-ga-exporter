@@ -10,7 +10,6 @@ A simple converter for spreadsheets to KNX ETS group address configurations in C
 Converter allows to use all possible features of the spreadsheet tools like Excel, LibreOffice etc to plan, duplicate and maintain your KNX group addresses. No more unhandy group address duplication or management in the KNX ETS software.
 
 
-
 ## Features
 - Parse and convert Excel sheets to KNX ETS readable CSV files containing group address configuration.
 - Different KNX ETS CSV formats supported.
@@ -58,24 +57,24 @@ Create / design all needed KNX group addresses in an spreadsheet using Excel / L
 Export the spreadsheet contents as CSV file:
 
 ```
-knx-ga-exporter -i knx-ga-exporter -i docs/Examples/01-SmallExampleWithRoomBook/KNX-planning-example.xlsx -vv
+knx-ga-exporter -i docs/Examples/01-SmallExampleWithRoomBook/KNX-planning-example.xlsx -vv
 
-2025-02-02 11:05:37 INFO: Loading XLSX input file 'docs/Examples/01-SmallExampleWithRoomBook/KNX-planning-example.xlsx'
-2025-02-02 11:05:37 DEBUG: Parsed GA: 0/0/0    | Light & Power | Switch | DPST-1-1 | B0-0-L - Basement Office - Ceiling light - Light & Power Switch
-2025-02-02 11:05:37 DEBUG: Parsed GA: 0/0/1    | Light & Power | Switch | DPST-1-1 | T0-0-L - Top Floor Bathroom - Ceiling light - Light & Power Switch
-2025-02-02 11:05:37 DEBUG: Parsed GA: 0/0/2    | Light & Power | Switch | DPST-1-1 | T1-0-L - Top Floor Bedroom - Wall light (north) - Light & Power Switch
-2025-02-02 11:05:37 DEBUG: Parsed GA: 0/0/4    | Light & Power | Switch | DPST-1-1 | B1-2-P - Basement Kitchen - Wall plug - next to bed. - Light & Power Switch
+2025-02-02 11:48:23 INFO: Loading XLSX input file 'docs/Examples/01-SmallExampleWithRoomBook/KNX-planning-example.xlsx'
+2025-02-02 11:48:23 DEBUG: Parsed GA: 0/0/1    | Light & Power | Switch | DPST-1-1 | B0-0-L - Basement Office - Ceiling light - Light & Power Switch
+2025-02-02 11:48:23 DEBUG: Parsed GA: 0/0/2    | Light & Power | Switch | DPST-1-1 | T0-0-L - Top Floor Bathroom - Ceiling light - Light & Power Switch
+2025-02-02 11:48:23 DEBUG: Parsed GA: 0/0/3    | Light & Power | Switch | DPST-1-1 | T1-0-L - Top Floor Bedroom - Wall light (north) - Light & Power Switch
+2025-02-02 11:48:23 DEBUG: Parsed GA: 0/0/5    | Light & Power | Switch | DPST-1-1 | B1-2-P - Basement Kitchen - Wall plug - next to bed. - Light & Power Switch
 ...
-2025-02-02 11:05:37 INFO: Exporting group addresses into CSV file 'knx-ga-addresses.csv'. format: 1/1, separator: '[TAB]', encoding: iso-8859-1
-2025-02-02 11:05:37 DEBUG: Exporting main group     0        | Light & Power |
-2025-02-02 11:05:37 DEBUG: Exporting   middle group 0/0      |               | Switch |
-2025-02-02 11:05:37 DEBUG: Exporting     sub group: 0/0/0    | Light & Power | Switch | DPST-1-1 | B0-0-L - Basement Office - Ceiling light - Light & Power Switch
-2025-02-02 11:05:37 DEBUG: Exporting     sub group: 0/0/1    | Light & Power | Switch | DPST-1-1 | T0-0-L - Top Floor Bathroom - Ceiling light - Light & Power Switch
-2025-02-02 11:05:37 DEBUG: Exporting     sub group: 0/0/2    | Light & Power | Switch | DPST-1-1 | T1-0-L - Top Floor Bedroom - Wall light (north) - Light & Power Switch
-2025-02-02 11:05:37 DEBUG: Exporting     sub group: 0/0/4    | Light & Power | Switch | DPST-1-1 | B1-2-P - Basement Kitchen - Wall plug - next to bed. - Light & Power Switch
+2025-02-02 11:48:23 INFO: Exporting group addresses into CSV file 'knx-ga-addresses.csv'. format: 1/1, separator: '[TAB]', encoding: iso-8859-1
+2025-02-02 11:48:23 DEBUG: Exporting main group     0        | Light & Power |
+2025-02-02 11:48:23 DEBUG: Exporting   middle group 0/0      |               | Switch |
+2025-02-02 11:48:23 DEBUG: Exporting     sub group: 0/0/1    | Light & Power | Switch | DPST-1-1 | B0-0-L - Basement Office - Ceiling light - Light & Power Switch
+2025-02-02 11:48:23 DEBUG: Exporting     sub group: 0/0/2    | Light & Power | Switch | DPST-1-1 | T0-0-L - Top Floor Bathroom - Ceiling light - Light & Power Switch
+2025-02-02 11:48:23 DEBUG: Exporting     sub group: 0/0/3    | Light & Power | Switch | DPST-1-1 | T1-0-L - Top Floor Bedroom - Wall light (north) - Light & Power Switch
+2025-02-02 11:48:23 DEBUG: Exporting     sub group: 0/0/5    | Light & Power | Switch | DPST-1-1 | B1-2-P - Basement Kitchen - Wall plug - next to bed. - Light &
 ...
-2025-02-02 11:05:37 DEBUG: Statistics: #GA: 16
-2025-02-02 11:05:37 INFO: Conversion successfully finished.
+2025-02-02 11:48:23 DEBUG: Statistics: #GA: 16
+2025-02-02 11:48:23 INFO: Conversion successfully finished.
 ```
 
 The exported CSV can be found in `knx-group-addresses.csv`:
@@ -91,12 +90,13 @@ The exported CSV can be found in `knx-group-addresses.csv`:
 ```
 
 ### Step2: Load CSV into KNX ETS application ###
-* Open the KNX ETS application and the project.
-* Edit -> Import Group Addresses -> Select the generated CSV file.
-* Voila! New group addresses are added or existing addresses got renamed.
+- Open the KNX ETS application and the project.
+- Edit -> Import Group Addresses -> Select the generated CSV file.
+- Voila! New group addresses are added or existing addresses got renamed.
 
-<img src="docs/images/ets-import.png" title="Design KNX GroupAddresses in spreadsheet" width="600" />
+  <img src="docs/images/ets-import.png" title="Design KNX GroupAddresses in spreadsheet" width="250" />
 
+  <img src="docs/images/est-import-result.png" title="Imported KNX GroupAddresses in ETS" width="600" />
 
 
 _Hint_: The KNX ETS application will not automatically delete group addresses not contained in the CSV file anymore. A cleanup must be done manually.
