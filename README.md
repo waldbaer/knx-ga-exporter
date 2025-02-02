@@ -5,9 +5,13 @@
 
 
 # KNX GroupAddress Exporter for ETS
+
+## Introduction
 A simple converter for spreadsheets to KNX ETS group address configurations in CSV format.
 
 Converter allows to use all possible features of the spreadsheet tools like Excel, LibreOffice etc to plan, duplicate and maintain your KNX group addresses. No more unhandy group address duplication or management in the KNX ETS software.
+
+Leveraging the powerful [jsonargparse](https://jsonargparse.readthedocs.io/) library, this tool supports configuration and control via command-line parameters or a JSON configuration file.
 
 
 ## Features
