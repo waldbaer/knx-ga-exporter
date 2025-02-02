@@ -49,11 +49,10 @@ def parse_group_addresses(wb: openpyxl.workbook, layout_config: dict) -> list[Gr
         group_sub_name = row[layout_config.sub_name_column].value
 
         dpt = row[layout_config.dpt_column].value
-        compiled_ga = row[layout_config.compiled_GA_column].value
         comment = row[layout_config.comment_column].value
 
         # Skip invalid / incomplete GAs
-        if dpt is None or dpt == 0 or dpt is None or compiled_ga is None or compiled_ga == 0:
+        if dpt is None or dpt == 0 or dpt is None:
             continue
 
         ga = GroupAddress(

@@ -100,7 +100,6 @@ def parse_config(prog: str, version: str, copy_right: str, author: str, arg_list
 
     arg_parser.add_argument("--layout.dpt-column", default=5, help="Column containing datapoint type of KNX GA")
     arg_parser.add_argument("--layout.target-ID-column", default=6, help="Column containing target ID KNX GA")
-    arg_parser.add_argument("--layout.compiled-GA-column", default=7, help="Column containing full accumulated GA")
     arg_parser.add_argument("--layout.comment-column", default=9, help="Column containing GA comment")
 
     # ---- Finally parse the inputs  ----
