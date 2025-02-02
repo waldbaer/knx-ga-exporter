@@ -76,28 +76,28 @@ CSV writer error details: {e}"""
             ) from e
 
 
-def export_csv(config: dict, group_addresses: list[GroupAddress]) -> None:
+def export_csv(output_config: dict, group_addresses: list[GroupAddress]) -> None:
     """Export KNX group address to CSV.
 
     Arguments:
-        config: Configuration hierarchy.
+        output_config: Output configuration hierarchy.
         group_addresses: KNX group addresses
     """
     csv_separators = {"tabulator": "\t", "comma": ",", "semicolon": ";"}
     exporter_functions = {"1/1": _export_csv_format_1_1, "3/3": _export_csv_format_3_3}
 
-    csv_separator = csv_separators[str(config.output.separator)]
+    csv_separator = csv_separators[str(output_config.separator)]
 
     logging.info(
         "Exporting group addresses into CSV file '%s'. format: %s, separator: '%s', encoding: %s",
-        config.output.file,
-        config.output.format,
+        output_config.file,
+        output_config.format,
         csv_separator.replace("\t", "[TAB]"),
-        config.output.encoding,
+        output_config.encoding,
     )
 
-    export_function = exporter_functions[str(config.output.format)]
-    export_function(config.output.file, config.output.encoding, csv_separator, group_addresses)
+    export_function = exporter_functions[str(output_config.format)]
+    export_function(output_config.file, output_config.encoding, csv_separator, group_addresses)
 
 
 def _filter_by_main_id(group_addresses: list[GroupAddress], main_id: int) -> list[GroupAddress]:

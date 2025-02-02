@@ -53,7 +53,7 @@ def parse_config(prog: str, version: str, copy_right: str, author: str, arg_list
     )
 
     # ---- Input / Output ----
-    arg_parser.add_argument("-i", "--input", required=True, help="Path to XSLX file to be parsed.")
+    arg_parser.add_argument("-i", "--input.file", required=True, help="Path to XSLX file to be parsed.")
     arg_parser.add_argument(
         "-o",
         "--output.file",

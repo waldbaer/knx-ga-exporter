@@ -123,7 +123,7 @@ def test_ct_valid_conversion(
     output_csv_path = f"{tmp_path}/conversion_result.csv"
 
     cli_args = (
-        f"--input {input_file_path} --output.file {output_csv_path} --output.encoding {output_encoding} "
+        f"--input.file {input_file_path} --output.file {output_csv_path} --output.encoding {output_encoding} "
         + f"{extra_cli_args}"
     )
     with caplog.at_level(logging.DEBUG):
@@ -167,7 +167,7 @@ def test_ct_invalid_conversion(
     """
     output_csv_path = f"{tmp_path}/conversion_result.csv"
 
-    cli_args = f"--input {input_file_path} --output.file {output_csv_path} "
+    cli_args = f"--input.file {input_file_path} --output.file {output_csv_path} "
 
     with caplog.at_level(logging.ERROR):
         cli_result = run_cli(cli_args, capsys)

@@ -59,9 +59,9 @@ def _main_logic(config: dict) -> int:
         int: exit code
     """
     configure_logging(config.verbose)
-    wb = load_workbook(config.input)
+    wb = load_workbook(config.input.file)
     gas = parse_group_addresses(wb, config.layout)
-    export_csv(config, gas)
+    export_csv(config.output, gas)
 
     logging.debug("Statistics: #GA: %s", len(gas))
     logging.info("Conversion successfully finished.")
