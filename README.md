@@ -123,7 +123,7 @@ Usage: knx-ga-exporter [-h] [--version] [-c CONFIG] [-v] [-i FILE] [-o FILE] [--
                        [--layout.sub-name-column SUB_NAME_COLUMN] [--layout.dpt-column DPT_COLUMN]
                        [--layout.target-ID-column TARGET_ID_COLUMN] [--layout.comment-column COMMENT_COLUMN]
 
-Converter for spreadsheets to KNX ETS group address configurations in CSV format. | Version 2.0.0 | Copyright 2019-2025
+Converter for spreadsheets to KNX ETS group address configurations in CSV format. | Version 2.0.1 | Copyright 2019-2025
 
 Default Config File Locations:
   ['./config.json'], Note: no existing default config file found.
