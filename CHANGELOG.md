@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.0.2] - 2025-07-31
+
+### Fixes
+- Ignore also empty combinations of sub-name / target ID
+
+### Dependencies
+- Bump jsonargparse from 4.38.0 to 4.40.0
+- Bump rich-argparse from 1.7.0 to 1.7.1 (#8)
+
+
 ## [2.0.1] - 2025-04-02
 
 ### Dependencies
