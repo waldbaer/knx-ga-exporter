@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.0.3] - 2025-11-01
+
+### Dependencies
+- Bump jsonargparse from 4.40.1 to 4.42.0
+- Bump rich-argparse from 1.7.1 to 1.7.2
+
+
 ## [2.0.2] - 2025-07-31
 
 ### Fixes
