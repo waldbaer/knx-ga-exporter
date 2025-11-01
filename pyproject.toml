@@ -10,8 +10,8 @@ requires-python = ">=3.9"
 dependencies = [
     # Force usage of openpyxl 3.0.10 due to https://foss.heptapod.net/openpyxl/openpyxl/-/issues/1963
     "openpyxl==3.1.5",
-    "jsonargparse==4.41.0",
-    "rich-argparse==1.7.1",
+    "jsonargparse==4.42.0",
+    "rich-argparse==1.7.2",
 ]
 
 [project.scripts]
@@ -22,11 +22,16 @@ requires = ["pdm-backend"]
 build-backend = "pdm.backend"
 
 [dependency-groups]
-lint = ["ruff>=0.8.3"]
-pytest = [
-    "pytest-cov>=6.0.0",
+lint = [
+    "ruff==0.14.3",
 ]
-docs = ["mkdocs>=1.6.1", "mkdocs-material>=9.5.49"]
+pytest = [
+    "pytest-cov==7.0.0",
+]
+docs = [
+    "mkdocs==1.6.1",
+    "mkdocs-material==9.6.22",
+]
 
 [project.urls]
 Repository = "https://github.com/waldbaer/knx-ga-exporter"
