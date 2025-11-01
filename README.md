@@ -189,6 +189,12 @@ Options:
 pdm install --dev
 ```
 
+### Update dependencies to latest versions
+
+```
+pdm update --unconstrained --save-exact --no-sync
+```
+
 ### Format / Linter / Tests
 
 ```
