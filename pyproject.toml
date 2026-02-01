@@ -29,7 +29,7 @@ pytest = [
 ]
 docs = [
     "mkdocs==1.6.1",
-    "mkdocs-material==9.6.23",
+    "mkdocs-material==9.7.1",
 ]
 
 [project.urls]
