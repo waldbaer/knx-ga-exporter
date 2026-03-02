@@ -27,10 +27,6 @@ lint = [
 pytest = [
     "pytest-cov==7.0.0",
 ]
-docs = [
-    "mkdocs==1.6.1",
-    "mkdocs-material==9.7.3",
-]
 
 [project.urls]
 Repository = "https://github.com/waldbaer/knx-ga-exporter"
@@ -46,7 +42,6 @@ source = "scm"
 [tool.pdm.scripts]
 lint = "ruff check ."
 format = "ruff format ."
-docs = "mkdocs serve"
 tests = "pytest --cov-report term-missing --cov=knx_ga_exporter --cov-fail-under=100 --verbose"
 
 # ---- Ruff ------------------------------------------------------------------------------------------------------------
