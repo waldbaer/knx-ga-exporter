@@ -55,7 +55,10 @@ def parse_group_addresses(wb: openpyxl.workbook, layout_config: dict) -> list[Gr
         if (
             dpt is None
             or dpt == 0
-            or ((group_sub_name is None or group_sub_name == 0) and (target_id is None or (target_id == 0)))
+            or (
+                ((group_sub_name is None) or (group_sub_name == 0) or (group_sub_name == "#N/A"))
+                and ((target_id is None) or (target_id == 0))
+            )
         ):
             continue
 
