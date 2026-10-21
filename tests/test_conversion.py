@@ -5,7 +5,6 @@ import os
 import re
 from dataclasses import dataclass
 from datetime import datetime
-from typing import Optional
 
 import pytest
 
@@ -19,18 +18,18 @@ class ExpectedEvent:
     """Expectation of an event and it's data (summary, description, location, ...)."""
 
     summary: str
-    description: Optional[str]
-    location: Optional[str]
-    start_date: Optional[datetime]
-    end_date: Optional[datetime]
+    description: str | None
+    location: str | None
+    start_date: datetime | None
+    end_date: datetime | None
 
     def __init__(
         self,
         summary: str,
-        description: Optional[str] = None,
-        location: Optional[str] = None,
-        start_date: Optional[datetime] = None,
-        end_date: Optional[datetime] = None,
+        description: str | None = None,
+        location: str | None = None,
+        start_date: datetime | None = None,
+        end_date: datetime | None = None,
     ) -> None:
         """Construct.
 

@@ -4,7 +4,6 @@
 import importlib.metadata
 import logging
 import os
-from typing import Optional
 
 from knx_ga_exporter.logging import configure_logging
 
@@ -15,13 +14,13 @@ from .parser import load_workbook, parse_group_addresses
 # ---- Module Meta-Data ------------------------------------------------------------------------------------------------
 __prog__ = "knx-ga-exporter"
 __dist_name__ = "knx_ga_exporter"
-__copyright__ = "Copyright 2019-2025"
+__copyright__ = "Copyright 2019-2026"
 __author__ = "Sebastian Waldvogel"
 
 # ---- Main -----------------------------------------------------------------------------------------------------------
 
 
-def cli(arg_list: Optional[list[str]] = None) -> int:
+def cli(arg_list: list[str] | None = None) -> int:
     """Main command line handling entry point.
 
     Arguments:

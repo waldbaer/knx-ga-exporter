@@ -6,11 +6,11 @@ authors = [{ name = "Sebastian Waldvogel", email = "sebastian@waldvogels.de" }]
 license = { text = "MIT" }
 readme = "README.md"
 
-requires-python = ">=3.9"
+requires-python = ">=3.10"
 dependencies = [
     "openpyxl==3.1.5",
-    "jsonargparse==4.42.0",
-    "rich-argparse==1.7.2",
+    "jsonargparse==4.52.0",
+    "rich-argparse==1.8.0",
 ]
 
 [project.scripts]

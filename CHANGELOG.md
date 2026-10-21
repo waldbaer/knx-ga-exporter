@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.0.4] - 2026-10-21
+
+### Breaking Changes
+- Minimum python version increased from 3.9 to 3.10
+
+### Fixes
+- Ignore group addresses with sub-name "#N/A"
+
+### Infrastructure
+- Add Python 3.14 and 3.15 to tested versions
+
+### Dependencies
+- Bump jsonargparse from 4.42.0 to 4.52.0
+- Bump rich-argparse from 1.7.2 to 1.8.0
+
+
 ## [2.0.3] - 2025-11-01
 
 ### Dependencies

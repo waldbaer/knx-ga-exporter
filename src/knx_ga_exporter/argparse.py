@@ -1,7 +1,8 @@
 """Argument parsing."""
 
 # ---- Imports ----
-from typing import Optional
+from argparse import Action
+from collections.abc import Iterable
 
 from jsonargparse import ArgumentParser, DefaultHelpFormatter
 from rich_argparse import RawTextRichHelpFormatter
@@ -17,8 +18,25 @@ OUTPUT_ENCODING_DEFAULT = "iso-8859-1"
 class HelpFormatter(DefaultHelpFormatter, RawTextRichHelpFormatter):
     """Custom CLI help formatter: Combined DefaultHelpFormatter and RichHelpFormatter."""
 
+    def _format_usage(self, usage: str | None, actions: Iterable[Action], *args: object, **kwargs: object) -> str:
+        """Format the usage.
 
-def parse_config(prog: str, version: str, copy_right: str, author: str, arg_list: Optional[list[str]] = None) -> dict:
+        RichHelpFormatter passes the actions as tuple, but DefaultHelpFormatter (jsonargparse >= 4.44.0)
+        requires a list.
+
+        Arguments:
+            usage: Usage string.
+            actions: Actions to be listed in the usage.
+            *args: Further positional arguments.
+            **kwargs: Further keyword arguments.
+
+        Returns:
+            Formatted usage.
+        """
+        return super()._format_usage(usage, list(actions), *args, **kwargs)
+
+
+def parse_config(prog: str, version: str, copy_right: str, author: str, arg_list: list[str] | None = None) -> dict:
     """Parse the configuration from CLI and/or configuration JSON file.
 
     Arguments:
