@@ -14,7 +14,7 @@ from .parser import load_workbook, parse_group_addresses
 # ---- Module Meta-Data ------------------------------------------------------------------------------------------------
 __prog__ = "knx-ga-exporter"
 __dist_name__ = "knx_ga_exporter"
-__copyright__ = "Copyright 2019-2025"
+__copyright__ = "Copyright 2019-2026"
 __author__ = "Sebastian Waldvogel"
 
 # ---- Main -----------------------------------------------------------------------------------------------------------
