@@ -47,7 +47,7 @@ def test_ct_version(capsys: pytest.CaptureFixture[str]) -> None:
     [
         (
             "",
-            r"input.*is required but not included",
+            r"the following arguments are required: input\.file",
         ),
         (
             "--input.file PATH_TO_UNKNOWN_FILE.XLSX",

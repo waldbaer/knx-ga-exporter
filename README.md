@@ -25,7 +25,7 @@ Changes can be followed at [CHANGELOG.md](https://github.com/waldbaer/knx-ga-exp
 
 ## Requirements
 
- - [Python 3.9](https://www.python.org/)
+ - [Python 3.10](https://www.python.org/)
  - [pip](https://pip.pypa.io/) or [pipx](https://pipx.pypa.io/stable/)
 
  For development:
@@ -115,15 +115,16 @@ Examples including the standard spreadsheet format can be found in folder [docs/
 Details about all available options:
 
 ```
-Usage: knx-ga-exporter [-h] [--version] [-c CONFIG] [-v] [-i FILE] [-o FILE] [--output.encoding ENCODING] [--output.format {1/1,3/3}]
+Usage: knx-ga-exporter [-c CONFIG] [-v] -i FILE [-o FILE] [--output.encoding ENCODING] [--output.format {1/1,3/3}]
                        [--output.separator {tabulator,comma,semicolon}] [--layout.sheet-name SHEET_NAME]
-                       [--layout.first-row FIRST_ROW] [--layout.last-column LAST_COLUMN] [--layout.main-ID-column MAIN_ID_COLUMN]
-                       [--layout.middle-ID-column MIDDLE_ID_COLUMN] [--layout.sub-ID-column SUB_ID_COLUMN]
-                       [--layout.main-name-column MAIN_NAME_COLUMN] [--layout.middle-name-column MIDDLE_NAME_COLUMN]
-                       [--layout.sub-name-column SUB_NAME_COLUMN] [--layout.dpt-column DPT_COLUMN]
-                       [--layout.target-ID-column TARGET_ID_COLUMN] [--layout.comment-column COMMENT_COLUMN]
+                       [--layout.first-row FIRST_ROW] [--layout.last-column LAST_COLUMN]
+                       [--layout.main-ID-column MAIN_ID_COLUMN] [--layout.middle-ID-column MIDDLE_ID_COLUMN]
+                       [--layout.sub-ID-column SUB_ID_COLUMN] [--layout.main-name-column MAIN_NAME_COLUMN]
+                       [--layout.middle-name-column MIDDLE_NAME_COLUMN] [--layout.sub-name-column SUB_NAME_COLUMN]
+                       [--layout.dpt-column DPT_COLUMN] [--layout.target-ID-column TARGET_ID_COLUMN]
+                       [--layout.comment-column COMMENT_COLUMN]
 
-Converter for spreadsheets to KNX ETS group address configurations in CSV format. | Version 2.0.3 | Copyright 2019-2025
+Converter for spreadsheets to KNX ETS group address configurations in CSV format. | Version 2.0.4 | Copyright 2019-2025
 
 Default Config File Locations:
   ['./config.json'], Note: no existing default config file found.

@@ -4,7 +4,6 @@
 import importlib.metadata
 import logging
 import os
-from typing import Optional
 
 from knx_ga_exporter.logging import configure_logging
 
@@ -21,7 +20,7 @@ __author__ = "Sebastian Waldvogel"
 # ---- Main -----------------------------------------------------------------------------------------------------------
 
 
-def cli(arg_list: Optional[list[str]] = None) -> int:
+def cli(arg_list: list[str] | None = None) -> int:
     """Main command line handling entry point.
 
     Arguments:
