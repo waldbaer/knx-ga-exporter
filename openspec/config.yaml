@@ -1,0 +1,33 @@
+schema: spec-driven
+
+# Project context: constraints that should guide OpenSpec artifacts and workflows.
+context: |
+  knx-ga-exporter converts a KNX group address plan kept in an XLSX spreadsheet
+  (Excel / LibreOffice) into a CSV file for the KNX ETS "Import Group Addresses"
+  dialog. It is a CLI used by people planning KNX installations.
+  - The CSV output must stay importable by ETS. Header names, column order,
+    quoting and the default output encoding (ISO-8859-1) are relied on by users.
+  - Users keep JSON configuration files and shell scripts for their sheet
+    layouts. CLI flags, JSON keys and default values are a public interface.
+  - Must keep working on Windows, macOS and Linux with Python 3.10 or newer.
+
+# Per-artifact rules
+rules:
+  proposal:
+    - Mark any change to CLI flags, JSON keys, defaults or CSV output as BREAKING.
+  tasks:
+    - Keep test coverage at 100% (`pdm run tests` fails below that) and pass `pdm run lint` and `pdm run format`.
+    - Add user-facing changes to CHANGELOG.md under the existing section names (Breaking Changes, Features, Fixes, Infrastructure, Dependencies).
+    - Pin any new dependency to an exact version in pyproject.toml.
+
+# Per-operation guidance (optional)
+# Add advisory guidance for how apply and archive work should be conducted.
+# This is separate from artifact rules above.
+# Example:
+#   operations:
+#     apply:
+#       guidance:
+#         - Keep test summaries concise
+#     archive:
+#       guidance:
+#         - Summarize the archive outcome before finishing
